@@ -1,0 +1,224 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #ffffff;
+    padding: 0;
+}
+
+.chat-container {
+    max-width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 15px;
+    background: #ffffff;
+}
+
+.message {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.message.my-message {
+    justify-content: flex-end;
+}
+
+.message.partner-message {
+    justify-content: flex-start;
+}
+
+/* 変更点: position: relative; を追加 */
+.message-bubble {
+    position: relative;
+    max-width: 90%;
+    padding: 12px 16px 24px;
+    border-radius: 18px;
+    word-wrap: break-word;
+    line-height: 1.4;
+    font-size: 13px;
+}
+
+.my-message .message-bubble {
+    background: #c3f69d;
+    padding: 12px 16px;
+    color: #333;
+    border-bottom-right-radius: 4px;
+}
+
+.my-message .message-bubble.img {
+    background: #fff;
+    padding: 0;
+}
+
+.partner-message .message-bubble {
+    max-width:calc(90% - 48px);
+    transform: translate(50px, 0px);
+    background: #f0f0f0;
+    color: #333;
+    border-bottom-left-radius: 4px;
+}
+
+.partner-message .message-bubble:before {
+    content: '';
+    position: absolute;
+    left: -55px;
+    top: 0px;
+    width: 48px;
+    height: 48px;
+    background:url(icon.jpg) no-repeat center center;
+    background-size:cover;
+    border-radius: 50%;
+}
+
+.message-image {
+    width: 100%;
+    background: #e0e0e0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 12px;
+    margin: 0px 0;
+}
+
+.message-image img{
+    width:100%;
+    max-height: 300px;
+    border-radius: 10px;            
+}
+
+.date-separator {
+    text-align: center;
+    color: #666;
+    font-size: 12px;
+    margin: 20px 0 15px 0;
+    padding: 8px;
+    background: #f9f9f9;
+    border-radius: 15px;
+    display: inline-block;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .message-bubble {
+        max-width: 95%;
+    }
+    
+    .partner-message .message-bubble {
+        max-width: calc(95% - 48px);
+    }
+
+    .chat-container {
+        padding: 10px;
+    }
+}
+
+/* --- ここからツールチップ用のCSSを追加 --- */
+
+/* ツールチップのトリガー(?)アイコンのスタイル */
+.tooltip-trigger {
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    width: 16px;
+    height: 16px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-align: center;
+    line-height: 16px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+    z-index: 2;
+}
+
+.tooltip-trigger:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* ツールチップ本体のスタイル */
+.tooltip-content {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 32px;
+    right: 0;
+    width: max-content;
+    max-width: 75%;
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    padding: 8px 12px;
+    border-radius: 6px;
+    z-index: 10;
+    font-size: 12px;
+    line-height: 1.5;
+    transition: opacity 0.3s, visibility 0.3s;
+    pointer-events: none;
+}
+.tooltip-content a{
+    color:#fff;
+    text-decoration: underline;
+}
+
+/* ツールチップの吹き出し矢印 */
+.tooltip-content::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+/* ツールチップ表示時のスタイル */
+.tooltip-content.show {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* --- フローティングプロンプトリンク用スタイル --- */
+.prompt-links {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 6px 8px;
+    border-radius: 8px;
+    z-index: 1000;
+}
+.prompt-links a {
+    color: #fff;
+    margin: 0 4px;
+    font-size: 12px;
+    text-decoration: none;
+}
+.prompt-links a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .prompt-links {
+        flex-direction:column;
+        bottom: 10px;
+    }
+    .prompt-links a {
+        margin: 4px 0;
+    }
+}
